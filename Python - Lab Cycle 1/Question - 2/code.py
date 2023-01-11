@@ -19,5 +19,5 @@ area1 = read(1)
 area2 = read(2)
 total = area1+area2
 print(f"Total area = {total}\n"
-      f"Percentage area of triangle 1 = {((area1/total)*100):.2}\n"
-      f"Percentage area of triangle 2 = {((area2/total)*100):.2}\n")
+      f"Percentage area of triangle 1 = {((area1/total)*100):.4}%\n"
+      f"Percentage area of triangle 2 = {((area2/total)*100):.4}%\n")
