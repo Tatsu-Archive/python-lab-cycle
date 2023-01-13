@@ -1,71 +1,80 @@
-# Function to print all the possible substrings
-def all_subs(string, n):
-    i, j = 0, 0
+def subs(string, n):
+    i, j, list = 0, 0, []
     for i in range(0, n+1):
         for j in range(i+1, n+1):
-            print(string[i:j], end=" ")  # To print all the substrings
+            list.append(string[i:j])
+    return list
 
 
-# Function to print all possible substrings of length n
-def subs_with_length(s, n):
-    i, j = 0, 0
-    l = len(s)
-    for i in range(0, l+1):
-        for j in range(i+1, l+1):
-            # To store the substring values to check if the length is equal to n
-            s1 = s[i:j]
-            if (len(s1) == n):
-                print(s1, end=",")
+def subs_length(string, l):
+    i, j, list = 0, 0, []
+    for i in range(0, len(string)+1):
+        for j in range(i+1, len(string)+1):
+            if len(string[i:j]) == l:
+                list.append(string[i:j])
+    return list
 
 
-# Function to print all possible substings of length n with c distinct characters
-def subs_dist_char_and_length(s, n, c):
-    i, j = 0, 0
-    l = len(s)
-    for i in range(0, l+1):
-        for j in range(i+1, l+1):
-            s1 = s[i:j]
+def subs_dist_length(string, l, n):
+    i, j, list = 0, 0, []
+    for i in range(0, len(string)+1):
+        for j in range(i+1, len(string)+1):
+            s1 = string[i:j]
             # To make the strings unique that is ton delete duplicate characters
             dist = set(s1)
             if (len(dist) == n):
                 print(s1, end=",")
 
 
-# Function to print all palindrome substrings
-def print_palindrome_subs(s):
-    i, j = 0, 0
-    l = len(s)
-    for i in range(0, l+1):
-        for j in range(i+1, l+1):
-            s1 = s[i:j]
-            s2 = s1[::-1]  # To reverse the substring
-            if (s2 == s1):
-                print(s1, end=",")
+def palindrome_subs(string):
+    i, j, list = 0, 0, []
+    for i in range(0, len(string)+1):
+        for j in range(i+1, len(string)+1):
+            if string[i:j] == string[::-1]:
+                list.append(string[i:j])
+    return list
 
 
 while True:
     print("\n\nMAIN MENU\n",
-          "1.Check Happy\n",
-          "2.Print happy within range\n",
-          "3.Print N Happy Numbers\n",
-          "4.Exit!")
-    choice = int(input("Enter the Choice:"))
+          "1.Print all possible substrings\n",
+          "2.Print substrings of length L\n",
+          "3.Print substrings of length L with N distinct letters\n",
+          "4.Print Palindrome substrings\n",
+          "5.Exit!")
+    choice = int(input("\nEnter the Choice:"))
+    string = input("Enter the String: ")
 
     if choice == 1:
-        pass
+        print("\nAll possible substrings are: ")
+        list = subs(string, len(string))
+        for i in list:
+            print(i, end=" ")
+
     elif choice == 2:
-        pass
+        l = int(input("Enter the length of substring: "))
+        print(f"\nSubstrings of length {n} are: ")
+        list = subs_length(string, l)
+        for i in list:
+            print(i, end=" ")
+
     elif choice == 3:
-        pass
+
+        n = int(input("Enter the length of substring: "))
+        print(f"\nSubstrings of length {n} are: ")
+        list = subs_length(string, n)
+        for i in list:
+            print(i, end=" ")
+
     elif choice == 4:
-        pass
+        print("\nAll possible substrings are: ")
+        list = palindrome_subs(string)
+        for i in list:
+            print(i, end=" ")
+
     else:
         break
 
-
-string = input("Enter the String:")
-print("All possible substrings are:")
-all_subs(string, len(string))
 
 # k=int(input("Enter the length of the substrings that you want to print:"))
 # print("The possible substrings with length",k,"is:")
