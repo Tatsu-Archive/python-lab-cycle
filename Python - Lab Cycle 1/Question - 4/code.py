@@ -30,24 +30,20 @@ def n_happy(end):
 
 while True:
     print("\n\nMAIN MENU\n",
-          "1.Check Happy\n",
-          "2.Print happy within range\n",
-          "3.Print N Happy Numbers\n",
-          "4.Exit!")
+          "1.Print all Substrings\n",
+          "2.Print Length n Substrings\n",
+          "3.Print Length n Substrings with n Distinct Characters\n",
+          "4.Print Length all Palindrome substrings\n",
+          "5.Exit!")
     choice = int(input("Enter the Choice:"))
 
     if choice == 1:
-        num = int(input("Enter the number to check if Happy: "))
-        if check_happy(num) is True:
-            print("\nHappy Number!")
-        else:
-            print("Sad Number!")
+        pass
     elif choice == 2:
-        start = int(input("Enter the Starting No: "))
-        end = int(input("Enter the Stopping No: "))
-        range_happy(start, end)
+        pass
     elif choice == 3:
-        end = int(input("Enter the Limit: "))
-        n_happy(end)
+        pass
+    elif choice == 4:
+        pass
     else:
         break
