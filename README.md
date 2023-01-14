@@ -1,6 +1,6 @@
 # Python Lab Cycle
 
-Repo for Lab Cycle code
+Repo for Python Lab Cycle.
 
 Table of contents
 ==============
