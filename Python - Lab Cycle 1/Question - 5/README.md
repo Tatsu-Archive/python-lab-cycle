@@ -1,4 +1,5 @@
-# Question 5
+Question 5
+===========
 
 **Develop a program to read a string and perform the following operations:**
 - Print all possible substrings.

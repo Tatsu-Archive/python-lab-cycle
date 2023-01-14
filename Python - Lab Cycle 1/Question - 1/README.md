@@ -1,4 +1,5 @@
-# Question 1:
+Question 1:
+==========
 
 **Develop a program to read a four-digit number and find its**  
 - Sum of digits  

@@ -1,4 +1,5 @@
-# Question 2:
+Question 2:
+===========
 
 **Develop a program to:**
 - read the three sides of two triangles

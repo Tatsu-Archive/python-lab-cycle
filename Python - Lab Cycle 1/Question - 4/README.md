@@ -1,4 +1,5 @@
-# Question 4
+Question 4
+===========
 
 **Develop a program to perform the following task:**  
 - Define a function to check whether a number is happy or not.  

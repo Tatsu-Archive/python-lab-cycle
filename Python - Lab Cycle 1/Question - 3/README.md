@@ -1,4 +1,5 @@
-# Question 3
+Question 3
+===========
 
 **Develop a program to:**
 - read employee's name,code and basic pay
