@@ -26,7 +26,7 @@ def sum_places(num):  # function to find the difference b/w the oddplace num and
             prododd *= num % 10  # if position is odd, it gets mulitplied to odd prod variable
         num = num//10
         pos += 1  # updating the position
-    return prododd-prodeven  # returning the subtracted value
+    return prododd-prodeven  # returning the osubtracted value
 
 
 num = int(input("Enter the number to find: "))

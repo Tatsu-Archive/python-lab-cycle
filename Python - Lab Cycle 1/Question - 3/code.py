@@ -1,12 +1,12 @@
-def employee_details():
+def employee_details(): #function for taking in emplyee details
     name = input("Enter the Employee Name: ")
     code = input("Enter the Employee Code: ")
     basic_pay = int(input("Enter the Basic Pay: "))
-    list = [name, code, main(basic_pay)]
+    list = [name, code, main(basic_pay)] #puts them inside a list and returns it 
     return list
 
 
-def main(basic_pay):
+def main(basic_pay): #function for checking is basic pay is less than the required amount and assigning its respective values
     if basic_pay < 10000:
         DA = 0.05
         HRA = 0.025
@@ -39,20 +39,20 @@ def main(basic_pay):
         PF = 0.12
         IT = 0.20
 
-    return calc(basic_pay, DA, HRA, MA, PT, PF, IT)
+    return calc(basic_pay, DA, HRA, MA, PT, PF, IT) #returns the final amount
 
 
-def calc(basic_pay, DA, HRA, MA, PT, PF, IT):
+def calc(basic_pay, DA, HRA, MA, PT, PF, IT): #function that calculates GS AND DED
     GS = basic_pay+basic_pay*DA+basic_pay*HRA+MA
     DED = PT+basic_pay*PF+basic_pay*IT
-    return net_Salary(GS, DED)
+    return net_Salary(GS, DED) #gives net salary GS AND GD TO calculate the net amount
+
+ 
+def net_Salary(GS, DED): #function for calculating net salary
+    net = GS-DED 
+    return net 
 
 
-def net_Salary(GS, DED):
-    net = GS-DED
-    return net
-
-
-list = employee_details()
-print("\nEmployee Name:", list[0], "\nEmployee Code: ",
+list = employee_details() #takes the users input 
+print("\nEmployee Name:", list[0], "\nEmployee Code: ", #prints the details
       list[1], "\nNet Salary: ", list[2], "\n")

@@ -1,11 +1,13 @@
-Develop a program to read the employee's name, code, and basic pay
-and calculate the gross salary, deduction, and net salary according to
-the following conditions. Define a function to find each of the
-components. Finally, generate a payslip.
+# Question 4
 
-![image](https://user-images.githubusercontent.com/87627258/211972465-f8d9708f-61e2-46b9-8fb4-11dd3f5ba249.png)
+**Develop a program to perform the following task:**  
+- Define a function to check whether a number is happy or not.  
+- Define a function to print all happy numbers within a range.  
+- Define a function to print first N happy numbers.  
 
+**A happy number is a number defined by the following process:**
+- Starting with any positive integer, replace the number with the sum of the squares of its digits.  
+- Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.  
+- Those numbers for which this process ends in 1 are happy.  
 
-Gross Salary (GS) : BP + DA + HRA + MA  
-Deduction (D): PT + PF + IT  
-Net Salary = GS – D
+>**Note: if a number is not being happy after 100 iterations, consider it sad**

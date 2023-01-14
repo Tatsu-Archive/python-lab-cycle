@@ -1,11 +1,12 @@
-Develop a program to read the employee's name, code, and basic pay
-and calculate the gross salary, deduction, and net salary according to
-the following conditions. Define a function to find each of the
-components. Finally, generate a payslip.
+# Question 3
 
-![image](https://user-images.githubusercontent.com/87627258/211972465-f8d9708f-61e2-46b9-8fb4-11dd3f5ba249.png)
+**Develop a program to:**
+- read employee's name,code and basic pay
+- calculate ross salary,deduction and net salary
+- define a function for each of the components
+- finally, generate a payslip
+  
 
-
-Gross Salary (GS) : BP + DA + HRA + MA  
+>**Gross Salary (GS) : BP + DA + HRA + MA  
 Deduction (D): PT + PF + IT  
-Net Salary = GS – D
+Net Salary = GS – D**
