@@ -41,7 +41,7 @@ while True: #main menu runs forever until user exits
         if check_happy(num) is True:
             print("\nHappy Number!")
         else:
-            print("Sad Number!")
+            print("\nSad Number!")
     elif choice == 2:
         start = int(input("Enter the Starting No: "))   #variable for starting value
         end = int(input("Enter the Stopping No: ")) #variable for ending value

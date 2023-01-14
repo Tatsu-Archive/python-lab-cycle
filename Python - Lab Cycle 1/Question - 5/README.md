@@ -1,11 +1,10 @@
-Develop a program to read the employee's name, code, and basic pay
-and calculate the gross salary, deduction, and net salary according to
-the following conditions. Define a function to find each of the
-components. Finally, generate a payslip.
+# Question 5
 
-![image](https://user-images.githubusercontent.com/87627258/211972465-f8d9708f-61e2-46b9-8fb4-11dd3f5ba249.png)
+**Develop a program to read a string and perform the following operations:**
+- Print all possible substrings.
+- Print all possible substrings of length K.
+- Print all possible substrings of length K with N distinct characters.
+- Print substring(s) of length maximum length with N distinct characters.
+- Print all palindrome substrings.
 
-
-Gross Salary (GS) : BP + DA + HRA + MA  
-Deduction (D): PT + PF + IT  
-Net Salary = GS – D
+>Define function for each of the task.
