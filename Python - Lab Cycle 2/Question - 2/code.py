@@ -7,9 +7,19 @@ def rotate_right(list,k):
         list.insert(0,pop)
     return list
 
+def tuple_list(list):
+    return tuple([x for x in list])
+
+def dup_list(tup):
+    duptup =  tuple(set(tup))
+    return list(duptup)
+
 string = input("Enter the string(num): ")
 list = [int(n) for n in string.split(" ")]
 k = int(input("Enter the no of positions to rotate: "))
 print("\nRotated list: ",rotate_right(list,k))
-tup = tuple([x for x in list])
-print("Tuple:",tup)
+
+tup = tuple_list(list)
+print("\nTuple:",tup)
+
+print("\nDuplicates Removed List: ",dup_list(tup))
