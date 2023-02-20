@@ -1,27 +1,16 @@
-def rabbit_pair(n):
-    current_month = 1
-    adult_pair = 0
-    child_pair = 1
-    total_pair = 1
+from tabulate import tabulate
 
-    while current_month < n:
-        if current_month == 3:
-            newadult_pair = child_pair
-            newchild_pair = adult_pair + child_pair
-            total_pair += adult_pair + child_pair
-
-            adult_pair += newadult_pair
-            child_pair += newchild_pair
-
-            current_month += 1
-
-        else:
-            current_month += 1
-
-    print('\nAdult Pair: ', adult_pair,
-          '\nChild Pair: ', child_pair,
-          '\nTotal Pair: ', total_pair)
+def count_rabbits(n):
+    if n == 1 or n == 2:
+        return 1
+    else:
+        return count_rabbits(n-1) + count_rabbits(n-2)
 
 
-n = int(input("Enter the number of months: "))
-rabbit_pair(n)
+N = int(input("Enter the number of months: "))
+heading = ["Month", "Rabbit Pairs"]
+data = []
+for i in range(1, N+1):
+    data.append([i, count_rabbits(i)])
+
+print(tabulate(data, headers=heading, tablefmt="fancy_grid"))
