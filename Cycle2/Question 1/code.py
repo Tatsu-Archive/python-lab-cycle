@@ -14,3 +14,4 @@ for i in range(1, N+1):
     data.append([i, count_rabbits(i)])
 
 print(tabulate(data, headers=heading, tablefmt="fancy_grid"))
+
