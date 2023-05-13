@@ -60,7 +60,7 @@ def palindrome_subs(string):  # function for finding palindrome substrings
                 list.append(sub)  # appends to list if so
     return list
 
-
+string = input("Enter the String: ")
 while True:  # main menu loop
     print("\n\nMAIN MENU\n",
           "1.Print all possible substrings\n",
@@ -72,7 +72,6 @@ while True:  # main menu loop
 
     choice = int(input("\nEnter the Choice:"))
     if choice in [1, 2, 3, 4, 5]:
-        string = input("Enter the String: ")
 
         if len(string) > 2:  # check for the string entered(if length is less than 2, program ends, because there is no substring for 1 letter strings)
             if choice == 1:

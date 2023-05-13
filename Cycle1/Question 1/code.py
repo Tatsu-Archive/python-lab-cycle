@@ -5,15 +5,12 @@ def sum_digits(num):  # function to find the sum of the digits
         num = num//10  # doing floor division to remove the extracted digit from variable
     return sum
 
-
 def reverse(num):  # function to find the reverse of the number
-    rev = 0
+    rev = ""
     while num != 0:
-        # reverse variable is multiplied by 10 to keep the places and the extracted digit is added
-        rev = (rev*10)+num % 10
-        num = num//10  # floor division to remove the extracted digit
+        rev += str(num % 10)
+        num = num // 10
     return rev
-
 
 def sum_places(num):  # function to find the difference b/w the oddplace num and evenplace num
     prododd = 1
@@ -26,10 +23,10 @@ def sum_places(num):  # function to find the difference b/w the oddplace num and
             prododd *= num % 10  # if position is odd, it gets mulitplied to odd prod variable
         num = num//10
         pos += 1  # updating the position
-    return prododd-prodeven  # returning the osubtracted value
+    return prodeven-prododd  # returning the osubtracted value
 
 
 num = int(input("Enter the number to find: "))
 print(f"Sum of digits of {num}: {sum_digits(num)}")
-print(f"Revese of {num}: {reverse(num)}")  # function call
+print(f"Revese of {num}: {(reverse(num))}")  # function call
 print(f"Difference of nos at odd and nos at even: {sum_places(num)}")

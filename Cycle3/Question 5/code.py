@@ -1,175 +1,206 @@
 from tkinter import *
-from tkinter.filedialog import askopenfilename, asksaveasfile
-from tkinter.messagebox import showinfo
-from tkinter.ttk import Style, Treeview
+from tkinter import ttk
+
+from numpy import delete
+from car_class import *
+from tkinter import filedialog
 import pickle
 
-vehicle_list = []
-vehicle_attributes = ["owner_name", "vendor", "model", "vehicle_type", "registration_number", "engine_number", "mileage"]
-vehicle_details = dict.fromkeys(vehicle_attributes, None)
+#Constants
+scr = Tk()
+scr.geometry("990x400+40+50")
+scr.configure(bg = "#202225")
+scr.title("Vehicle Sale Data")
+text= Label(scr, font=('Poppins',15,'bold'),text="VEHICLE DATA",bg="#202225",fg="white")
+text.pack()
+CarData = VehicleCollection() 
+DataFrame = LabelFrame(scr,text="Datas",bg = "#2f3136",fg="white")
+DataFrame.pack(expand="yes",side=RIGHT)
+CarDisplay = ttk.Treeview(DataFrame)
 
-def add_vehicle():
-    global vehicle_list
-    treeview.insert(parent='', index='end', text="", values=(owner_name.get(), vendor.get(), model.get(), vehicle_type.get(), registration_number.get(), engine_number.get(), mileage.get()))
-    vehicle_details['owner_name'] = owner_name.get()
-    vehicle_details['vendor'] = vendor.get()
-    vehicle_details['model'] = model.get()
-    vehicle_details['vehicle_type'] = vehicle_type.get()
-    vehicle_details['registration_number'] = int(registration_number.get())
-    vehicle_details['engine_number'] = int(engine_number.get())
-    vehicle_details['mileage'] = float(mileage.get())
-    vehicle_list.append(vehicle_details.copy())
+def data_screen_frame():
+    count=0
+    CarDisplay['columns'] = ("EngNo","Model","Type","Mileage","Vendor","RegNo","Owner")
+    CarDisplay.column("#0",width=0,minwidth=3)
+    CarDisplay.column("EngNo",anchor = W,minwidth=10,width=50)
+    CarDisplay.column('Model',anchor = W,minwidth=10,width=50)
+    CarDisplay.column('Type',anchor = W,minwidth=10,width=50)
+    CarDisplay.column('Mileage',anchor = W,minwidth=20,width=50)
+    CarDisplay.column('Vendor',anchor = W,minwidth=20,width=50)
+    CarDisplay.column('RegNo',anchor = W,minwidth=20,width=50)
+    CarDisplay.column('Owner',anchor = W,minwidth=20,width=50)
+    #setting the headings
+    CarDisplay.heading("#0",text = " ",anchor=W )
+    CarDisplay.heading("EngNo",text = "Engine No.",anchor = W)
+    CarDisplay.heading("Model",text = "Model",anchor = W)
+    CarDisplay.heading("Type",text ="Type",anchor = W)
+    CarDisplay.heading("Mileage",text = "Mileage",anchor = W)
+    CarDisplay.heading("Vendor",text = "Vendor",anchor = W)
+    CarDisplay.heading("RegNo",text = "Reg. No.",anchor = W)
+    CarDisplay.heading("Owner",text = "Owner",anchor = W)
+    List_of_cars = CarData.vehicle_list
+    for i in List_of_cars:
+        show_Values = tuple(i)
+        CarDisplay.insert(parent = "",index = 'end',values=show_Values)
+    CarDisplay.pack()
+   
+#Defining Button actions
 
-def filter_vehicles():
-    global vehicle_list
-    if (owner_name.get() or vendor.get() or model.get() or vehicle_type.get() or mileage.get()):
-        for item in treeview.get_children():
-            treeview.delete(item)
-    else:
-        showinfo(title="Error", message="Give a Filter Key")
-    if (owner_name.get()):
-        filter_key = owner_name.get()
-        for vehicle in vehicle_list:
-            if vehicle['owner_name'] == filter_key:
-                treeview.insert(parent='', index='end', text="", values=(vehicle['owner_name'], vehicle['vendor'], vehicle['model'], vehicle['vehicle_type'], vehicle['registration_number'], vehicle['engine_number'], vehicle['mileage']))
-    elif (vendor.get()):
-        filter_key = vendor.get()
-        for vehicle in vehicle_list:
-            if vehicle['vendor'] == filter_key:
-                treeview.insert(parent='', index='end', text="", values=(vehicle['owner_name'], vehicle['vendor'], vehicle['model'], vehicle['vehicle_type'], vehicle['registration_number'], vehicle['engine_number'], vehicle['mileage']))
-    elif (model.get()):
-        filter_key = model.get()
-        for vehicle in vehicle_list:
-            if vehicle['model'] == filter_key:
-                treeview.insert(parent='', index='end', text="", values=(vehicle['owner_name'], vehicle['vendor'], vehicle['model'], vehicle['vehicle_type'], vehicle['registration_number'], vehicle['engine_number'], vehicle['mileage']))
-    elif (vehicle_type.get()):
-        filter_key = vehicle_type.get()
-        for vehicle in vehicle_list:
-            if vehicle['vehicle_type'] == filter_key:
-                treeview.insert(parent='', index='end', text="", values=(vehicle['owner_name'], vehicle['vendor'], vehicle['model'], vehicle['vehicle_type'], vehicle['registration_number'], vehicle['engine_number'], vehicle['mileage']))
-    elif (mileage.get()):
-        filter_key = float(mileage.get())
-        for vehicle in vehicle_list:
-            if vehicle['mileage'] == filter_key:
-                treeview.insert(parent='', index='end', text="", values=(vehicle['owner_name'], vehicle['vendor'], vehicle['model'], vehicle['vehicle_type'], vehicle['registration_number'], vehicle['engine_number'], vehicle['mileage']))
+#Creating a frame for the Input details
+In_Frame = LabelFrame(scr,text = "Input",bg = "#2f3136",fg="white")
+In_Frame.pack(fill="x",expand="yes",padx = 20)
+In_EngNo = StringVar(None)
+#Creating Labels and respective entry boxes
+In_EngNo_Label = Label(In_Frame,text = "Engine No",bg='#2f3136',fg="white")
+In_EngNo_Label.grid(row = 0,column=0,padx=10,pady=10)
+In_EngNo = Entry(In_Frame)
+In_EngNo.grid(row=0,column=1,padx=10,pady=10)
 
-def delete_vehicle():
-   # Get selected item to Delete
-    selection = treeview.selection()[0] 
-    treeview.delete(selection)
+In_Model_Label = Label(In_Frame,text = "Model",bg='#2f3136',fg="white")
+In_Model_Label.grid(row = 1,column=0,padx=10,pady=10)
+In_Model = Entry(In_Frame)
+In_Model.grid(row=1,column=1,padx=10,pady=10)
 
-def load_vehicles():
-        # Clear the treeview list items
-    for item in treeview.get_children():
-        treeview.delete(item)
+In_Type_Label = Label(In_Frame,text = "Type",bg='#2f3136',fg="white")
+In_Type_Label.grid(row = 2,column=0,padx=10,pady=10)
+In_Type = Entry(In_Frame)
+In_Type.grid(row=2,column=1,padx=10,pady=10)
 
-    # Clear the vehicle list
-    global vehicle_list
-    vehicle_list.clear()
+In_Mileage_Label = Label(In_Frame,text = "Mileage",bg='#2f3136',fg="white")
+In_Mileage_Label.grid(row = 0,column=2,padx=10,pady=10)
+In_Mileage = Entry(In_Frame)
+In_Mileage.grid(row=0,column=3,padx=10,pady=10)
 
-    # Load vehicles from file
-    try:
-        filename = askopenfilename(defaultextension=".pkl", filetypes=[("Pickle Files", "*.pkl")])
-        with open(filename, "rb") as file:
-            vehicle_list = pickle.load(file)
+In_Vendor_Label = Label(In_Frame,text = "Vendor",bg='#2f3136',fg="white")
+In_Vendor_Label.grid(row = 1,column=2,padx=10,pady=10)
+In_Vendor = Entry(In_Frame)
+In_Vendor.grid(row=1,column=3,padx=10,pady=10)
 
-        # Populate treeview with loaded data
-        for vehicle in vehicle_list:
-            treeview.insert(parent='', index='end', text="", values=(vehicle['owner_name'], vehicle['vendor'], vehicle['model'], vehicle['vehicle_type'], vehicle['registration_number'], vehicle['engine_number'], vehicle['mileage']))
+In_Regno_Label = Label(In_Frame,text = "Reg No",bg='#2f3136',fg="white")
+In_Regno_Label.grid(row = 2,column=2,padx=10,pady=10)
+In_RegNo = Entry(In_Frame)
+In_RegNo.grid(row=2,column=3,padx=10,pady=10)
 
-    except Exception as e:
-        showinfo(title="Error", message="Failed to load file: " + str(e))
+In_Owner_Label = Label(In_Frame,text = "Owner",bg='#2f3136',fg="white")
+In_Owner_Label.grid(row = 4,column=0,padx=10,pady=10)
+In_Owner = Entry(In_Frame)
+In_Owner.grid(row=4,column=1,padx=10,pady=10)
 
-def save_vehicles():
-    # Get the file to save vehicles
-    file = asksaveasfile(defaultextension=".pkl", filetypes=[("Pickle Files", "*.pkl")])
-    if file:
-        try:
-            pickle.dump(vehicle_list, file)
-            showinfo(title="Success", message="Vehicles saved successfully.")
-        except Exception as e:
-            showinfo(title="Error", message="Failed to save vehicles: " + str(e))
+def clear_inputs():
+    #To clear the inputs on screen
+    In_EngNo.delete(0,END)
+    In_Model.delete(0,END)
+    In_Type.delete(0,END)
+    In_Mileage.delete(0,END)
+    In_Vendor.delete(0,END)
+    In_RegNo.delete(0,END)
+    In_Owner.delete(0,END)
 
-# Create GUI
-root = Tk()
-root.geometry("800x500")
-root.title("Vehicle Management System")
+def add_to_entry_box():
+    clear_inputs()
+    #Select the record number
+    sel_record = CarDisplay.focus()
+    #Selecting values of the record
+    rec_values = CarDisplay.item(sel_record,'values')
+    #outputting to entry box
+    In_EngNo.insert(0,rec_values[0])
+    In_Model.insert(0,rec_values[1])
+    In_Type.insert(0,rec_values[2])
+    In_Mileage.insert(0,rec_values[3])
+    In_Vendor.insert(0,rec_values[4])
+    In_RegNo.insert(0,rec_values[5])
+    In_Owner.insert(0,rec_values[6])
 
-# Create Style
-style = Style()
-style.configure("Treeview", rowheight=25)
-style.configure("Treeview.Heading", font=("Arial", 12))
+def Delete_record():
+    sel_record = CarDisplay.focus()
+    rec_values = CarDisplay.item(sel_record,'values')
+    #To Remove Data from screen
+    to_delete = CarDisplay.selection()[0]
+    CarDisplay.delete(to_delete)
+    #To remove from CarData
+    CarData.Delete_car(rec_values[5])
 
-# Create Treeview
-treeview = Treeview(root, columns=vehicle_attributes, show="headings")
-treeview.heading("owner_name", text="Owner Name")
-treeview.heading("vendor", text="Vendor")
-treeview.heading("model", text="Model")
-treeview.heading("vehicle_type", text="Vehicle Type")
-treeview.heading("registration_number", text="Registration Number")
-treeview.heading("engine_number", text="Engine Number")
-treeview.heading("mileage", text="Mileage")
-treeview.pack(side=LEFT, fill=BOTH, expand=True)
 
-# Create Scrollbar
-scrollbar = Scrollbar(root, orient=VERTICAL)
-scrollbar.pack(side=RIGHT, fill=Y)
-treeview.config(yscrollcommand=scrollbar.set)
-scrollbar.config(command=treeview.yview)
 
-# Create Entry Fields
-owner_name_label = Label(root, text="Owner Name: ")
-owner_name_label.pack()
-owner_name = Entry(root, width=30)
-owner_name.pack()
+def Add_the_record():
+    add_data = (In_EngNo.get(),In_Model.get(),In_Type.get(),
+        int(In_Mileage.get()),In_Vendor.get(),In_RegNo.get(),In_Owner.get())
+    
+    to_Add_Car = Vehicle(In_EngNo.get(),In_Model.get(),In_Type.get(),int(In_Mileage.get())
+        ,In_Vendor.get(),In_RegNo.get(),In_Owner.get())
+    CarData.add_vehicle(to_Add_Car)
+    CarDisplay.insert(parent = "",index = 'end',values=add_data)
+    clear_inputs
 
-vendor_label = Label(root, text="Vendor: ")
-vendor_label.pack()
-vendor = Entry(root, width=30)
-vendor.pack()
+def Load_File():
+    scr.filename = filedialog.askopenfilename(initialdir="/",
+        title="Select Pickle File",filetypes=(("pickle files","*.dat"),#
+                      ("All Files","*.*")))
+    CarData.load_pickle(scr.filename)
+    for i in CarData.vehicle_list:
+        show_Values = tuple(i)
+        CarDisplay.insert(parent = "",index = 'end',values=show_Values)
+    
+def Save_File():
+    scr.filename = filedialog.askopenfilename(initialdir="/",
+        title="Select pickle File",filetypes=(("File to save","data.dat"),#
+                           ("All Files","*.*")))    
+    CarData.store_pickle(scr.filename)
 
-model_label = Label(root, text="Model: ")
-model_label.pack()
-model = Entry(root, width=30)
-model.pack()
+def Sort_mileage():
+    #Sorting object data by Mileage
+    CarData.sort_by_mileage()
+    #Deleting items on window
+    for data in CarDisplay.get_children():
+        CarDisplay.delete(data)
+    for i in CarData.vehicle_list:
+        show_Values = tuple(i)
+        CarDisplay.insert(parent = "",index = 'end',values=show_Values)
+def Save_as_pdf():
+    scr.filename = filedialog.askopenfilename(initialdir="/",
+        title="Select Pdf File",filetypes=(("pdf files","*.pdf"),("All Files","*.*"))) 
+    CarData.export_pdf(scr.filename)
 
-vehicle_type_label = Label(root, text="Vehicle Type: ")
-vehicle_type_label.pack()
-vehicle_type = Entry(root, width=30)
-vehicle_type.pack()
+def Buttons_Frame():
+    ButtonFrame = LabelFrame(scr,text = "Options",bg = "grey")
+    ButtonFrame.pack()
 
-registration_number_label = Label(root, text="Registration Number: ")
-registration_number_label.pack()
-registration_number = Entry(root, width=30)
-registration_number.pack()
+    AddRec_button = Button(ButtonFrame,text = "Add",command=Add_the_record,#
+                              activebackground='#2f3136',bg='grey',fg="white")
+    AddRec_button.grid(row=0,column=0,padx=10,pady=10)
 
-engine_number_label = Label(root, text="Engine Number: ")
-engine_number_label.pack()
-engine_number = Entry(root, width=30)
-engine_number.pack()
+    Modify_button = Button(ButtonFrame,text = "Modify",#
+                               activebackground='#2f3136',bg='grey',fg="white")
+    Modify_button.grid(row=1,column=0,padx=10,pady=10)
 
-mileage_label = Label(root, text="Mileage: ")
-mileage_label.pack()
-mileage = Entry(root, width=30)
-mileage.pack()
+    Open_button = Button(ButtonFrame,text = "Open File",command=Load_File,#
+                               activebackground='#2f3136',bg='grey',fg="white")
+    Open_button.grid(row=2,column=0,padx=10,pady=10)
 
-# Create Buttons
-add_button = Button(root, text="Add Vehicle", command=add_vehicle)
-add_button.pack()
+    Sort_button = Button(ButtonFrame,text = "Sort by Mileage",command=Sort_mileage,#
+                                 activebackground='#2f3136',bg='grey',fg="white")
+    Sort_button.grid(row=0,column=1,padx=10,pady=10)
 
-filter_button = Button(root, text="Filter Vehicles", command=filter_vehicles)
-filter_button.pack()
+    Delete_button = Button(ButtonFrame,text = "Delete Entry",command=Delete_record,#
+                                    activebackground='#2f3136',bg='grey',fg="white")
+    Delete_button.grid(row=1,column=1,padx=10,pady=10)
 
-delete_button= Button(root, text="Delete Vehicle", command=delete_vehicle)
-delete_button.pack()
+    Save_button = Button(ButtonFrame,text = "Save Data",command=Save_File,#
+                                   activebackground='#2f3136',bg='grey',fg="white")
+    Save_button.grid(row=2,column=1,padx=10,pady=10)
 
-clear_button = Button(root, text="Clear List", command=clear_list)
-clear_button.pack()
+    Report_button = Button(ButtonFrame,text = "Save PDF",command=Save_as_pdf,#
+                                         activebackground='#2f3136',bg='grey',fg="white")
+    Report_button.grid(row=0,column=3,padx=10,pady=10)
 
-load_button = Button(root, text="Load Vehicles", command=load_vehicles)
-load_button.pack()
+    Show_button = Button(ButtonFrame,text = "Show Selection",command=add_to_entry_box,#
+                    activebackground='#2f3136',bg='grey',fg="white")
+    Show_button.grid(row=1,column=3,padx=10,pady=10)
 
-save_button = Button(root, text="Save Vehicles", command=save_vehicles)
-save_button.pack()
+    Clear_Button = Button(ButtonFrame,text = "Clear",command=clear_inputs,#
+                                     activebackground='#2f3136',bg='grey',fg="white")
+    Clear_Button.grid(row=2,column=3,padx=10,pady=10)
 
-root.mainloop()
+Buttons_Frame()
+data_screen_frame() 
+scr.mainloop()

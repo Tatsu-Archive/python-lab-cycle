@@ -1,44 +1,53 @@
-import math
 
-class ThreeDShapes:
-    def __init__(self, *args):
-        self.radius = args[0]
-        self.height = args[1]
-        self.area = 0
-        self.volume = 0
+class _3D_Shapes: # Abstract class
+    def print_Volume(self):
+        print("Volume: ", self.volume)
 
-    def calcArea(self):
-        pass
-
-    def calcVolume(self):
-        pass
-
-    def printVolume(self):
-        print(f'Volume: {self.volume}')
-
-    def printArea(self):
-        print(f'Area: {self.area}')
-
-class Cylinder(ThreeDShapes):
-    def calcArea(self):
-        self.area = 2 * math.pi * self.radius * (self.radius + self.height)
-
-    def calcVolume(self):
-        self.volume = math.pi * self.radius * self.radius * self.height
-
-class Sphere(ThreeDShapes):
-    def calcArea(self):
-        self.area = 4 * math.pi * self.radius * self.radius
-
-    def calcVolume(self):
-        self.volume = 4 / 3 * math.pi * self.radius * self.radius * self.radius
-
-radius = int(input('Enter the radius: '))
-height = int(input('Enter the height: '))
-cylinder = Cylinder(radius, height)
-cylinder.calcArea()
-cylinder.calcVolume()
-cylinder.printArea()
-cylinder.printVolume()
+    def print_Area(self):
+        print("Area: ", self.area)
 
 
+class Cylinder(_3D_Shapes): # Cylinder class
+    def __init__(self, radius, height):
+        self.radius = radius
+        self.height = height
+    
+    def calculate_Volume(self): # Volume of cylinder
+        self.volume = 3.14 * self.radius * self.radius * self.height
+        _3D_Shapes.print_Volume(self)
+     
+    def calculate_Area(self): # Surface area of cylinder
+        self.area = 2 * 3.14 * self.radius * (self.radius + self.height)
+        _3D_Shapes.print_Area(self)
+    
+
+class Sphere(_3D_Shapes): # Sphere class
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def calculate_Volume(self): # Volume of sphere
+        self.volume = (4/3) * 3.14 * self.radius * self.radius * self.radius
+        _3D_Shapes.print_Volume(self)
+    
+    def calculate_Area(self): # Surface area of sphere
+        self.area = 4 * 3.14 * self.radius * self.radius
+        _3D_Shapes.print_Area(self)
+
+    
+def main(): # main function
+    print("Cylinder")
+    cylinr= int(input("Enter the radius: "))
+    cylinh= int(input("Enter the height: "))
+    cylin = Cylinder(cylinr, cylinh)
+    cylin.calculate_Volume() 
+    cylin.calculate_Area()
+
+    print()
+    print("Sphere")
+    sphr = int(input("Enter the radius: "))
+    sph = Sphere(sphr)
+    sph.calculate_Volume()
+    sph.calculate_Area()
+
+
+main() # main function call

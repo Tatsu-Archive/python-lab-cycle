@@ -1,5 +1,3 @@
-'''Develop a two-player tic-tac-toe game using pygame with proper comments and documentation.'''
-
 import pygame
 import sys
 import numpy as np
@@ -143,6 +141,12 @@ while True:
                 mark_square(clicked_row, clicked_col, player)
                 if check_win(player):
                     game_over = True
+                    print("Player {} wins!".format(player))
+                    
+                elif is_board_full():
+                    game_over = True
+                    print("It's a tie!")
+
                 player = player % 2 + 1
                 draw_figures()
         if event.type == pygame.KEYDOWN:

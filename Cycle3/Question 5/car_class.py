@@ -157,5 +157,6 @@ def main():
             exit()
         else:
             print("Invalid choice")
-
-main()
+            
+if __name__ == "__main__":
+    main()
