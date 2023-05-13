@@ -43,9 +43,6 @@ def data_screen_frame():
         show_Values = tuple(i)
         CarDisplay.insert(parent = "",index = 'end',values=show_Values)
     CarDisplay.pack()
-   
-#Defining Button actions
-
 #Creating a frame for the Input details
 In_Frame = LabelFrame(scr,text = "Input",bg = "#2f3136",fg="white")
 In_Frame.pack(fill="x",expand="yes",padx = 20)

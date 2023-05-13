@@ -1,18 +1,9 @@
-'''Design a class to store the details of a vehicle such as engine number, model, type, mileage,
-vendor, registration number, and owner name. Design another class that holds the details
-of several vehicles and provide functions to
-• Display the details of the collection
-• the collection according to mileage
-• Add, Delete and Modify the entries from the collection
-• Store and Load the collection as a pickle file
-• Filter the result according to the attributes and export it as a pdf report'''
-
-
 import pickle, tabulate
 import pandas as pd
 from fpdf import FPDF
 
-class Vehicle:
+# Class for Vehicle
+class Vehicle: 
     def __init__(self, engine_no, model, owner_name, vehicle_type, mileage, vendor, registration_no):
         self.engine_no = engine_no
         self.model = model
@@ -26,41 +17,42 @@ class Vehicle:
         s = "{:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15}".format(self.engine_no, self.model, self.owner_name, self.vehicle_type, self.mileage, self.vendor, self.registration_no)
         print(s)
 
+# Class for Vehicle Collection
 class VehicleCollection:
     def __init__(self):
         self.vehicle_list = []
-
+    # Function to add vehicle to the list
     def add_vehicle(self, vehicle):
         self.vehicle_list.append(vehicle)
-
+    # Function to delete vehicle from the list
     def delete_vehicle(self, registration_no):
         for i in self.vehicle_list:
             if i.registration_no == registration_no:
                 self.vehicle_list.remove(i)
-
+    # Function to modify vehicle in the list
     def modify_vehicle(self, registration_no, new_vehicle):
         for i in self.vehicle_list:
             if i.registration_no == registration_no:
                 self.vehicle_list.remove(i)
                 self.vehicle_list.append(new_vehicle)
-
+    # Function to display vehicle list
     def display(self):
         print("{:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15}".format('Engine No', 'Model', 'Owner Name', 'Vehicle Type', 'Mileage', 'Vendor', 'Registration No'))
         for vehicle in self.vehicle_list:
             vehicle.__str__()
             print()
-
+    # Function to sort vehicle list by mileage
     def sort_by_mileage(self):
         self.vehicle_list.sort(key=lambda x: x.mileage)
-
+    # Function to store vehicle list as pickle file
     def store_pickle(self):
         with open('vehicle.pickle', 'wb') as f:
             pickle.dump(self.vehicle_list, f)
-
+    # Function to load vehicle list from pickle file
     def load_pickle(self):
         with open('vehicle.pickle', 'rb') as f:
             self.vehicle_list = pickle.load(f)
-
+    # Function to filter vehicle list
     def filter(self, attribute, value):
         filtered_list = []
         for i in self.vehicle_list:
@@ -86,7 +78,7 @@ class VehicleCollection:
                 if i.registration_no == value:
                     filtered_list.append(i)
         return filtered_list
-
+    # Function to export vehicle list as pdf
     def export_pdf(self, filtered_list):
         pdf = FPDF()
         pdf.add_page()
@@ -97,7 +89,7 @@ class VehicleCollection:
             pdf.cell(200, 10, txt="{:<15} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15}".format(i.engine_no, i.model, i.owner_name, i.vehicle_type, i.mileage, i.vendor, i.registration_no), ln=3, align='C')
         pdf.output("vehicle.pdf")
 
-
+# Main function
 def main():
     vehicle_collection = VehicleCollection()
     while True:
@@ -157,5 +149,5 @@ def main():
             exit()
         else:
             print("Invalid choice")
-
+# Calling main function
 main()
